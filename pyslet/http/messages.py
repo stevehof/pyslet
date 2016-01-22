@@ -269,7 +269,7 @@ class ChunkedReader(io.RawIOBase):
         if self.chunk_left == 0:
             self.src.readline()
         p = params.ParameterParser(self.src.readline().strip())
-        self.chunk_left = int(p.parse_token(), 16)
+        self.chunk_left = int(p.parse_token() or "0", 16)
         if self.chunk_left == 0:
             self.eof = True
             # read the trailing headers and CRLF

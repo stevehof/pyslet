@@ -179,6 +179,14 @@ class ChunkedTests(unittest.TestCase):
         self.assertTrue(r.read() == "0123456789ABCDEF01234", "unchunked data")
         self.assertTrue(src.read() == "trailer", "trailer left on the stream")
 
+    def test_chunked_reader_when_empty(self):
+        src = StringIO("")
+        r = ChunkedReader(src)
+        dest = StringIO()
+        r.readinto(dest)
+        self.assertTrue(dest.read() == "")
+        self.assertTrue(src.read() == "")
+
 
 class MessageTests(unittest.TestCase):
 
